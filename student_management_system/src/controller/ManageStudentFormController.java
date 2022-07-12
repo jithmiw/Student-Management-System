@@ -12,6 +12,9 @@ import view.tm.StudentTM;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ManageStudentFormController {
     public AnchorPane root;
@@ -98,6 +101,23 @@ public class ManageStudentFormController {
     }
     
     public void btnAddNewOnAction(ActionEvent event) {
+        txtStudentId.setDisable(false);
+        txtStudentName.setDisable(false);
+        txtEmail.setDisable(false);
+        txtContact.setDisable(false);
+        txtAddress.setDisable(false);
+        txtNIC.setDisable(false);
+        txtStudentId.clear();
+        txtStudentId.setText(generateNewId());
+        txtStudentName.clear();
+        txtEmail.clear();
+        txtContact.clear();
+        txtAddress.clear();
+        txtNIC.clear();
+        txtStudentName.requestFocus();
+        btnSave.setDisable(false);
+        btnSave.setText("Save");
+        tblStudents.getSelectionModel().clearSelection();
     }
 
     public void btnSaveOnAction(ActionEvent event) {
@@ -107,5 +127,36 @@ public class ManageStudentFormController {
     }
 
     public void btnSearchOnAction(ActionEvent event) {
+    }
+
+    private String generateNewId() {
+        try {
+            ResultSet rst = SQLUtil.executeQuery("SELECT student_id FROM Student ORDER BY student_id DESC LIMIT 1;");
+            if (rst.next()) {
+                String id = rst.getString("student_id");
+                int newStudentId = Integer.parseInt(id.replace("S00-", "")) + 1;
+                return String.format("S00-%03d", newStudentId);
+            } else {
+                return "S00-001";
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (tblStudents.getItems().isEmpty()) {
+            return "S00-001";
+        } else {
+            String id = getLastStudentId();
+            int newStudentId = Integer.parseInt(id.replace("S", "")) + 1;
+            return String.format("S00-%03d", newStudentId);
+        }
+    }
+
+    private String getLastStudentId() {
+        List<StudentTM> tempStudentsList = new ArrayList<>(tblStudents.getItems());
+        Collections.sort(tempStudentsList);
+        return tempStudentsList.get(tempStudentsList.size() - 1).getStudent_id();
     }
 }
