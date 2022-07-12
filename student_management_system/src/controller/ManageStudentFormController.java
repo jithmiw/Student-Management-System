@@ -180,6 +180,22 @@ public class ManageStudentFormController {
     }
 
     public void btnDeleteOnAction(ActionEvent event) {
+        /*Delete student*/
+        String id = tblStudents.getSelectionModel().getSelectedItem().getStudent_id();
+        try {
+            if (!existStudent(id)) {
+                new Alert(Alert.AlertType.ERROR, "There is no such student associated with the id " + id).show();
+            }
+            SQLUtil.executeUpdate("DELETE FROM Student WHERE student_id=?", id);
+
+            tblStudents.getItems().remove(tblStudents.getSelectionModel().getSelectedItem());
+            tblStudents.getSelectionModel().clearSelection();
+            initUI();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete the student " + id).show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnSearchOnAction(ActionEvent event) {
