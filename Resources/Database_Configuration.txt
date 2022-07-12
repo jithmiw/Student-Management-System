@@ -59,6 +59,8 @@ CREATE TABLE Intake(
 	CONSTRAINT FOREIGN KEY(course_id) REFERENCES Course(course_id) on Delete Cascade on Update Cascade
 );
 
+
+
 CREATE TABLE Registration(
 	registration_id VARCHAR(45) NOT NULL,
 	reg_date DATE,
@@ -81,4 +83,38 @@ CREATE TABLE Payment(
 );
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+INSERT INTO Student VALUES('S00-001','Saman Perera','saman@gmail.com','0749555865','Panadura','200055495');
+INSERT INTO Student VALUES('S00-002','Kasun Wijesinghe','kasun@gmail.com','0749555456','Matara','200155495');
+INSERT INTO Student VALUES('S00-003','Nimal Fernando','nimal@gmail.com','0756555565','Colombo','200055245');
+
+
+INSERT INTO Teacher VALUES('T00-001','Hasika Sandaruwan','199555495','0749455865','Panadura');
+INSERT INTO Teacher VALUES('T00-002','Niroth Samarawickrama','197055495','0749555865','Panadura');
+INSERT INTO Teacher VALUES('T00-003','Sanu Vithange','198855495','0749555865','Galle');
+
+
+INSERT INTO Subject VALUES('SUB-001','DBP','95','T00-001');
+INSERT INTO Subject VALUES('SUB-002','OOP','90','T00-002');
+INSERT INTO Subject VALUES('SUB-003','Architectures and Design Patterns','95','T00-003');
+
+
+INSERT INTO Course VALUES('C00-001','GDSE','320000','2 yrs','SUB-001');
+INSERT INTO Course VALUES('C00-002','CMJD','40000','6 months','SUB-002');
+
+
+INSERT INTO Intake VALUES('I00-001','2022-09-12','','After A/L','C00-001');
+INSERT INTO Intake VALUES('I00-002','2022-09-12','','Undergraduate','C00-002');
+
+
+INSERT INTO Registration VALUES('R00-001','2022-07-12','S00-001','I00-001');
+INSERT INTO Registration VALUES('R00-002','2022-07-12','S00-002','I00-002');
+
+
+INSERT INTO Payment VALUES('P00-001','2022-07-12','40000','R00-001');
+INSERT INTO Payment VALUES('P00-002','2022-07-12','10000','R00-002');
 
