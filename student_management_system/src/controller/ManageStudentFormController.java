@@ -100,7 +100,7 @@ public class ManageStudentFormController {
         btnSave.setDisable(true);
         btnDelete.setDisable(true);
     }
-    
+
     public void btnAddNewOnAction(ActionEvent event) {
         txtStudentId.setDisable(false);
         txtStudentName.setDisable(false);
@@ -247,5 +247,10 @@ public class ManageStudentFormController {
         List<StudentTM> tempStudentsList = new ArrayList<>(tblStudents.getItems());
         Collections.sort(tempStudentsList);
         return tempStudentsList.get(tempStudentsList.size() - 1).getStudent_id();
+    }
+
+    public void btnRefreshOnAction(ActionEvent event) {
+        initUI();
+        loadAllStudents();
     }
 }

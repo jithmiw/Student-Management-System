@@ -1,6 +1,6 @@
 package view.tm;
 
-public class StudentTM implements Comparable<StudentTM>{
+public class StudentTM implements Comparable<StudentTM> {
     private String student_id;
     private String student_name;
     private String email;
