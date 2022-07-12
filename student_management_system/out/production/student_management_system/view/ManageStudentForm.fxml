@@ -44,9 +44,9 @@
             <TableColumn prefWidth="128.0" text="NIC" />
             </columns>
         </TableView>
-      <JFXTextField fx:id="txtContact" layoutX="90.0" layoutY="168.0" prefHeight="31.0" prefWidth="252.0" promptText="Contact :" />
-      <JFXTextField fx:id="txtAddress" layoutX="390.0" layoutY="168.0" prefHeight="31.0" prefWidth="392.0" promptText="Address :" />
-      <JFXTextField fx:id="txtNIC" layoutX="460.0" layoutY="238.0" prefHeight="31.0" prefWidth="322.0" promptText="NIC :" />
+      <JFXTextField fx:id="txtContact" labelFloat="true" layoutX="90.0" layoutY="168.0" prefHeight="31.0" prefWidth="252.0" promptText="Contact :" />
+      <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="390.0" layoutY="168.0" prefHeight="31.0" prefWidth="392.0" promptText="Address :" />
+      <JFXTextField fx:id="txtNIC" labelFloat="true" layoutX="460.0" layoutY="238.0" prefHeight="31.0" prefWidth="322.0" promptText="NIC :" />
       <JFXTextField fx:id="txtSearch" layoutX="607.0" layoutY="25.0" promptText="Search Student" />
       <JFXButton buttonType="RAISED" layoutX="776.0" layoutY="25.0" onAction="#btnSearchOnAction" prefHeight="31.0" prefWidth="77.0" style="-fx-background-radius: 50; -fx-background-color: #38555B;" text="Search" textFill="WHITE" />
     </children>

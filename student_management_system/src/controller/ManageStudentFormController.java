@@ -121,6 +121,62 @@ public class ManageStudentFormController {
     }
 
     public void btnSaveOnAction(ActionEvent event) {
+        txtStudentId.setDisable(false);
+        txtStudentName.setDisable(false);
+        txtEmail.setDisable(false);
+        txtContact.setDisable(false);
+        txtAddress.setDisable(false);
+        txtNIC.setDisable(false);
+
+        String id = txtStudentId.getText();
+        String name = txtStudentName.getText();
+        String email = txtEmail.getText();
+        String contact = txtContact.getText();
+        String address = txtAddress.getText();
+        String nic = txtNIC.getText();
+
+        if (btnSave.getText().equalsIgnoreCase("save")) {
+            /*Save student*/
+            try {
+                if (existStudent(id)) {
+                    new Alert(Alert.AlertType.ERROR, id + " already exists").show();
+                }
+                SQLUtil.executeUpdate("INSERT INTO Student (student_id, student_name, email, contact, address, nic) VALUES (?,?,?,?,?,?)", id, name, email, contact, address, nic);
+
+                tblStudents.getItems().add(new StudentTM(id, name, email, contact, address, nic));
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to save the student " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            /*Update student*/
+            try {
+                if (!existStudent(id)) {
+                    new Alert(Alert.AlertType.ERROR, "There is no such student associated with the id " + id).show();
+                }
+                SQLUtil.executeUpdate("UPDATE Student SET student_name=?, email=?, contact=?, address=?, nic=? WHERE student_id=?", name, email, contact, address, nic, id);
+
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, "Failed to update the student " + id + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            StudentTM selectedStudent = tblStudents.getSelectionModel().getSelectedItem();
+            selectedStudent.setStudent_name(name);
+            selectedStudent.setEmail(email);
+            selectedStudent.setContact(contact);
+            selectedStudent.setAddress(address);
+            selectedStudent.setNic(nic);
+            tblStudents.refresh();
+        }
+        btnAddNewStudent.fire();
+    }
+
+    boolean existStudent(String id) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeQuery("SELECT student_id FROM Student WHERE student_id=?", id).next();
     }
 
     public void btnDeleteOnAction(ActionEvent event) {
