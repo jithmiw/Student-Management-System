@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import model.StudentDTO;
 import util.SQLUtil;
 import view.tm.StudentTM;
 
@@ -199,6 +200,22 @@ public class ManageStudentFormController {
     }
 
     public void btnSearchOnAction(ActionEvent event) {
+        tblStudents.getItems().clear();
+        String id = txtSearch.getText();
+        try {
+            StudentDTO student = null;
+            ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Student WHERE student_id=?", id);
+            if (rst.next()) {
+                student = new StudentDTO(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4), rst.getString(5), rst.getString(6));
+            }
+            if (student != null) {
+                tblStudents.getItems().add(new StudentTM(student.getStudent_id(), student.getStudent_name(), student.getEmail(), student.getContact(), student.getAddress(), student.getNic()));
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "No search results.").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("Failed to find the student " + id, e);
+        }
     }
 
     private String generateNewId() {
